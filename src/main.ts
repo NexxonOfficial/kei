@@ -2,6 +2,8 @@ import { dirname, importx } from "@discordx/importer";
 import type { Interaction, Message } from "discord.js";
 import { IntentsBitField } from "discord.js";
 import { Client } from "discordx";
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const bot = new Client({
   // To use only guild command
@@ -14,6 +16,7 @@ export const bot = new Client({
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.GuildMessageReactions,
     IntentsBitField.Flags.GuildVoiceStates,
+    IntentsBitField.Flags.MessageContent,
   ],
 
   // Debug logs are disabled in silent mode
@@ -23,6 +26,7 @@ export const bot = new Client({
   simpleCommand: {
     prefix: "!",
   },
+  botGuilds: ["1282734066357243934"]
 });
 
 bot.once("ready", () => {
