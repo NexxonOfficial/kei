@@ -1,5 +1,5 @@
 import { dirname, importx } from "@discordx/importer";
-import type { Interaction, Message } from "discord.js";
+import type { Guild, Interaction, Message } from "discord.js";
 import { IntentsBitField } from "discord.js";
 import { Client } from "discordx";
 import * as dotenv from 'dotenv'

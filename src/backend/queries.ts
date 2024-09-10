@@ -7,18 +7,36 @@ mysql.config({
     host     : process.env.DB_ENDPOINT,
     database : process.env.DB_DATABASE,
     user     : process.env.DB_USERNAME,
-    //password : process.env.DB_PASSWORD
+    password : process.env.DB_PASSWORD
 })
 
-export const EnableIfDisabled = async (guildId: Number) => {
-    return new Promise(async (res, rej) => {
-        let response = await mysql.query(`SELECT * FROM ${process.env.DATABASE_THREADS} WHERE guild_id = ?`, [guildId])
+export const ThreadsEnable = async (guildId: Number) => {
+    return new Promise<string>(async (res, rej) => {
+        try {
+            await mysql.query(`UPDATE threads SET enabled=1 WHERE guild_id = ?`, [guildId])
+            res("Resolved.")
+        } catch(exception) {
+            console.error(exception)
+            rej("We was unable to enable threads for your guild at this time. Please try again later!")
+        }
+    })
+}
+
+export const ThreadsDisable = async (guildId: Number) => {
+    return new Promise<string>(async (res, rej) => {
+        try {
+            await mysql.query(`UPDATE threads SET enabled=0 WHERE guild_id = ?`, [guildId])
+            res("Resolved.")
+        } catch(exception) {
+            console.error(exception)
+            rej("We was unable to disable threads for your guild at this time. Please try again later!")
+        }
     })
 }
 
 export const ValidateThreadExistence = async (guild_id: Number) => {
-    let threadCheck = await mysql.query(`SELECT * FROM ${process.env.DATABASE_THREADS} WHERE guild_id = ?`, [guild_id])
-    if(threadCheck == '') {
+    let threadCheck: object[] = await mysql.query(`SELECT * FROM ${process.env.DATABASE_THREADS} WHERE guild_id = ?`, [guild_id])    
+    if(threadCheck.length == 0) {
         await mysql.query(`INSERT INTO ${process.env.DATABASE_THREADS} (guild_id) VALUES (?)`, [guild_id])
     }
 }
