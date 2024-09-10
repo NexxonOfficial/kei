@@ -13,7 +13,7 @@ mysql.config({
 export const ThreadsEnable = async (guildId: Number) => {
     return new Promise<string>(async (res, rej) => {
         try {
-            await mysql.query(`UPDATE threads SET enabled=1 WHERE guild_id = ?`, [guildId])
+            await mysql.query(`UPDATE ${process.env.DATABASE_THREADS} SET enabled=1 WHERE guild_id = ?`, [guildId])
             res("Resolved.")
         } catch(exception) {
             console.error(exception)
@@ -25,7 +25,7 @@ export const ThreadsEnable = async (guildId: Number) => {
 export const ThreadsDisable = async (guildId: Number) => {
     return new Promise<string>(async (res, rej) => {
         try {
-            await mysql.query(`UPDATE threads SET enabled=0 WHERE guild_id = ?`, [guildId])
+            await mysql.query(`UPDATE ${process.env.DATABASE_THREADS} SET enabled=0 WHERE guild_id = ?`, [guildId])
             res("Resolved.")
         } catch(exception) {
             console.error(exception)
