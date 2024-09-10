@@ -1,5 +1,5 @@
 import { Discord, SlashGroup, Slash } from "discordx";
-import { EnableIfDisabled } from '../../backend/queries.ts'
+import { EnableIfDisabled } from '../backend/queries.ts'
 import { CommandInteraction } from "discord.js";
 
 @Discord()
